@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Polaris Resort — Official Receipt</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon.svg">
+<link rel="apple-touch-icon" href="/icon.svg">
+<meta name="theme-color" content="#0b1f3a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+  :root{
+    --navy:#0b1f3a;
+    --navy-deep:#081627;
+    --gold:#c8a24a;
+    --gold-light:#e6cf94;
+    --white:#ffffff;
+    --paper:#fbfaf7;
+    --ink:#1b2430;
+    --muted:#6b7280;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Georgia', 'Times New Roman', serif;
+    background:var(--navy-deep);
+    color:var(--ink);
+    padding:32px 16px;
+  }
+  .app{
+    max-width:920px;
+    margin:0 auto;
+  }
+  .toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .toolbar h1{
+    color:var(--gold-light);
+    font-size:1.3rem;
+    font-weight:600;
+    letter-spacing:0.04em;
+    margin:0;
+    font-family:'Trebuchet MS', sans-serif;
+  }
+  .btns{display:flex;gap:10px;flex-wrap:wrap;}
+  button{
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:0.85rem;
+    font-weight:600;
+    letter-spacing:0.03em;
+    padding:10px 18px;
+    border-radius:10px;
+    border:1px solid var(--gold);
+    background:transparent;
+    color:var(--gold-light);
+    cursor:pointer;
+    transition:background .15s ease, color .15s ease;
+  }
+  button:hover{background:var(--gold);color:var(--navy-deep);}
+  button.primary{background:var(--gold);color:var(--navy-deep);}
+  button.primary:hover{background:var(--gold-light);}
+
+  .sheet{
+    background:var(--paper);
+    border-radius:18px;
+    box-shadow:0 20px 50px rgba(0,0,0,.4);
+    overflow:hidden;
+  }
+  .band{
+    background:var(--navy);
+    color:var(--white);
+    padding:28px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    border-bottom:4px solid var(--gold);
+  }
+  .brand-name{
+    font-size:1.6rem;
+    letter-spacing:0.08em;
+    font-weight:700;
+    color:var(--gold-light);
+  }
+  .brand-sub{
+    font-size:0.75rem;
+    color:#c9d3e0;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    margin-top:4px;
+  }
+  .band .doc-label{
+    text-align:right;
+  }
+  .doc-label .tag{
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:0.7rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--gold-light);
+  }
+  .doc-label .num{
+    font-size:1.1rem;
+    color:var(--white);
+    margin-top:4px;
+  }
+  .doc-label input{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.35);
+    border-radius:8px;
+    color:var(--white);
+    text-align:right;
+    font-family:'Georgia', serif;
+    font-size:1rem;
+    padding:5px 10px;
+    width:160px;
+  }
+  .body-pad{padding:36px 40px 40px;}
+
+  .grid-two{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+    margin-bottom:28px;
+  }
+  .field-group h3{
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:0.7rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    border-bottom:1px solid #e3ddce;
+    padding-bottom:6px;
+    margin:0 0 12px;
+  }
+  label{
+    display:block;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:10px;
+  }
+  input, textarea, select{
+    width:100%;
+    border:1px solid #d8d2c2;
+    border-radius:8px;
+    background:#fff;
+    font-family:'Georgia', serif;
+    font-size:0.95rem;
+    padding:7px 10px;
+    color:var(--ink);
+  }
+  input:focus, textarea:focus, select:focus{
+    outline:none;
+    border-color:var(--gold);
+  }
+
+  table.items{
+    width:100%;
+    border-collapse:separate;
+    border-spacing:0 6px;
+    margin-top:8px;
+  }
+  table.items th{
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--white);
+    background:var(--navy);
+    text-align:left;
+    padding:9px 12px;
+  }
+  table.items th:first-child{border-radius:8px 0 0 8px;}
+  table.items th:last-child{border-radius:0 8px 8px 0;}
+  table.items th.num, table.items td.num{text-align:right;}
+  table.items td{
+    padding:6px 8px;
+    background:#fff;
+    font-size:0.92rem;
+  }
+  table.items td input{padding:6px 8px;}
+  .row-actions{width:34px;text-align:center;}
+  .row-actions button{
+    padding:5px 10px;
+    font-size:0.75rem;
+    border-color:#c9c3b2;
+    color:#9a3b3b;
+    border-radius:8px;
+  }
+  .row-actions button:hover{background:#9a3b3b;color:#fff;border-color:#9a3b3b;}
+  .add-row{margin-top:10px;}
+  .add-row button{padding:7px 14px;font-size:0.75rem;}
+
+  .totals{
+    margin-top:20px;
+    margin-left:auto;
+    width:280px;
+  }
+  .totals .line{
+    display:flex;
+    justify-content:space-between;
+    padding:6px 0;
+    font-size:0.92rem;
+    border-bottom:1px dashed #d8d2c2;
+  }
+  .totals .line.grand{
+    border-bottom:none;
+    border-top:2px solid var(--navy);
+    margin-top:6px;
+    padding-top:10px;
+    font-weight:700;
+    font-size:1.15rem;
+    color:var(--navy);
+  }
+  .totals input{text-align:right;width:110px;padding:5px 8px;}
+  .totals .line.balance{
+    font-weight:700;
+    color:#9a3b3b;
+    border-bottom:none;
+    border-top:1px solid #d8d2c2;
+    padding-top:10px;
+    margin-top:2px;
+  }
+
+  .pay-status{
+    display:flex;
+    gap:18px;
+    margin-top:22px;
+    align-items:center;
+    font-family:'Trebuchet MS', sans-serif;
+  }
+  .pay-status label{margin:0;font-size:0.75rem;display:flex;align-items:center;gap:6px;text-transform:none;letter-spacing:0;color:var(--ink);}
+  .pay-status input[type=radio]{width:auto;}
+
+  .footer-note{
+    margin-top:32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+  }
+  .signature{
+    text-align:center;
+    flex:1;
+  }
+  .signature .line{
+    border-top:1px solid var(--ink);
+    margin-top:36px;
+    padding-top:6px;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:0.7rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .stamp{
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:0.68rem;
+    color:var(--muted);
+    max-width:260px;
+    line-height:1.5;
+  }
+
+  @media (max-width:720px){
+    .grid-two{grid-template-columns:1fr;}
+    .band{padding:22px;flex-direction:column;gap:14px;}
+    .body-pad{padding:24px;}
+    .footer-note{flex-direction:column;align-items:stretch;}
+  }
+
+  .history-panel{
+    display:none;
+    max-width:920px;
+    margin:0 auto 20px;
+    background:var(--paper);
+    border-radius:18px;
+    padding:20px 28px;
+    box-shadow:0 10px 30px rgba(0,0,0,.35);
+  }
+  .history-panel.open{display:block;}
+  .history-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #e3ddce;
+    padding-bottom:10px;
+    margin-bottom:12px;
+  }
+  .history-head h2{
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:1rem;
+    letter-spacing:0.05em;
+    color:var(--navy);
+    margin:0;
+  }
+  .history-month{
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:16px 0 8px;
+  }
+  .history-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 14px;
+    margin-bottom:8px;
+    background:#fff;
+    border:1px solid #ece7d9;
+    border-radius:10px;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:0.85rem;
+  }
+  .history-item .meta{color:var(--muted);font-size:0.78rem;margin-top:2px;}
+  .history-item .actions{display:flex;gap:8px;}
+  .history-item .actions button{padding:5px 10px;font-size:0.72rem;}
+  .history-empty{
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:0.85rem;
+    color:var(--muted);
+    padding:20px 0;
+    text-align:center;
+  }
+
+  .done-row{
+    margin-top:28px;
+    text-align:center;
+    border-top:1px dashed #d8d2c2;
+    padding-top:24px;
+  }
+  .done-btn{padding:14px 32px;font-size:0.9rem;}
+
+  .invoice-overlay{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(8,22,39,.85);
+    z-index:50;
+    overflow-y:auto;
+    padding:32px 16px;
+  }
+  .invoice-overlay.open{display:block;}
+  .invoice-card{
+    max-width:420px;
+    margin:0 auto;
+    background:#fff;
+    border-radius:10px;
+    padding:28px 24px;
+    font-family:'Courier New', monospace;
+    color:var(--ink);
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
+  }
+  .invoice-head{text-align:center;margin-bottom:14px;}
+  .inv-brand{font-size:1.15rem;font-weight:700;letter-spacing:0.08em;color:var(--navy);}
+  .inv-sub{font-size:0.75rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+  .inv-meta{font-size:0.82rem;margin:4px 0;}
+  .inv-meta div{display:flex;justify-content:space-between;padding:2px 0;}
+  .inv-meta span:first-child{color:var(--muted);}
+  .inv-meta span:last-child{text-align:right;max-width:220px;}
+  .inv-divider{border-top:1px solid var(--ink);margin:12px 0;}
+  .inv-divider.dashed{border-top:1px dashed #999;}
+  table.inv-items{width:100%;border-collapse:collapse;font-size:0.82rem;}
+  table.inv-items th{text-align:left;font-weight:700;border-bottom:1px solid var(--ink);padding:4px 2px;}
+  table.inv-items th.r, table.inv-items td.r{text-align:right;}
+  table.inv-items td{padding:4px 2px;}
+  .inv-totals .line{display:flex;justify-content:space-between;font-size:0.85rem;padding:3px 0;}
+  .inv-totals .line.grand{font-weight:700;font-size:1rem;border-top:1px solid var(--ink);margin-top:4px;padding-top:8px;}
+  .inv-totals .line.balance{font-weight:700;color:#9a3b3b;}
+  .inv-footer{text-align:center;font-size:0.75rem;color:var(--muted);margin-top:16px;}
+  .invoice-actions{
+    max-width:420px;
+    margin:18px auto 0;
+    display:flex;
+    gap:10px;
+    justify-content:center;
+  }
+
+  @media print{
+    body{background:#fff;padding:0;}
+    .toolbar{display:none;}
+    .app{max-width:100%;}
+    .sheet{box-shadow:none;border-radius:0;}
+    button{display:none;}
+    .row-actions{display:none;}
+  }
+
+  .datepick{cursor:pointer;background:#fff;}
+  .date-wrap{position:relative;}
+  .cal-pop{
+    position:absolute;
+    top:calc(100% + 6px);
+    left:0;
+    z-index:50;
+    width:250px;
+    background:#fff;
+    border:1px solid #d8d2c2;
+    border-radius:10px;
+    box-shadow:0 12px 28px rgba(0,0,0,.18);
+    padding:10px;
+    display:none;
+    font-family:'Trebuchet MS', sans-serif;
+  }
+  .cal-pop.open{display:block;}
+  .cal-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:8px;
+  }
+  .cal-head button{
+    padding:3px 8px;
+    font-size:0.75rem;
+    border-radius:6px;
+  }
+  .cal-head .cal-title{
+    font-size:0.8rem;
+    font-weight:600;
+    color:var(--navy);
+    letter-spacing:0.02em;
+  }
+  .cal-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:2px;
+    text-align:center;
+  }
+  .cal-grid .dow{
+    font-size:0.62rem;
+    color:var(--muted);
+    text-transform:uppercase;
+    padding:4px 0;
+  }
+  .cal-grid .day{
+    font-size:0.78rem;
+    padding:6px 0;
+    border-radius:6px;
+    cursor:pointer;
+    color:var(--ink);
+  }
+  .cal-grid .day:hover{background:var(--gold-light);}
+  .cal-grid .day.muted{color:#c7c2b3;}
+  .cal-grid .day.selected{background:var(--gold);color:var(--navy-deep);font-weight:700;}
+  .cal-grid .day.today:not(.selected){border:1px solid var(--gold);}
+  .cal-today-row{
+    text-align:center;
+    margin-top:8px;
+    padding-top:8px;
+    border-top:1px solid #ece7d9;
+  }
+  .cal-today-row button{padding:4px 10px;font-size:0.7rem;}
+
+  .band .doc-label .date-wrap{position:relative;}
+  .band input.datepick{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.35);
+    color:var(--white);
+  }
+
+  .sel-wrap{position:relative;}
+  .sel-wrap select{display:none;}
+  .sel-btn{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border:1px solid #d8d2c2;
+    border-radius:8px;
+    background:#fff;
+    font-family:'Georgia', serif;
+    font-size:0.95rem;
+    padding:7px 10px;
+    color:var(--ink);
+    cursor:pointer;
+    text-align:left;
+  }
+  .sel-btn:hover{border-color:var(--gold);}
+  .sel-btn .car{
+    color:var(--gold);
+    font-size:0.8rem;
+    margin-left:8px;
+  }
+  .sel-pop{
+    position:absolute;
+    top:calc(100% + 4px);
+    left:0;
+    right:0;
+    z-index:40;
+    background:#fff;
+    border:1px solid #d8d2c2;
+    border-radius:8px;
+    box-shadow:0 12px 28px rgba(0,0,0,.18);
+    padding:4px;
+    display:none;
+  }
+  .sel-pop.open{display:block;}
+  .sel-opt{
+    padding:8px 10px;
+    font-size:0.92rem;
+    border-radius:6px;
+    cursor:pointer;
+    color:var(--ink);
+  }
+  .sel-opt:hover{background:var(--gold-light);}
+  .sel-opt.selected{background:var(--gold);color:var(--navy-deep);font-weight:700;}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <div class="toolbar">
+    <h1>Polaris Resort</h1>
+    <div class="btns">
+      <button onclick="toggleHistory()">☰ History</button>
+      <button class="primary" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+  </div>
+
+  <div class="history-panel" id="historyPanel">
+    <div class="history-head">
+      <h2>Receipt History</h2>
+      <button onclick="toggleHistory()">✕ Close</button>
+    </div>
+    <div id="historyList"></div>
+  </div>
+
+  <div class="sheet" id="sheet">
+    <div class="band">
+      <div>
+        <div class="brand-name">POLARIS RESORT</div>
+        <div class="brand-sub">Official Receipt</div>
+      </div>
+      <div class="doc-label">
+        <div class="tag">Receipt No.</div>
+        <input type="text" id="receiptNo" value="0001" />
+        <div class="tag" style="margin-top:10px;">Date</div>
+        <div class="date-wrap">
+          <input type="text" id="receiptDate" class="datepick" readonly placeholder="Select date" onclick="openCalendar('receiptDate')" />
+        </div>
+      </div>
+    </div>
+
+    <div class="body-pad">
+      <div class="grid-two">
+        <div class="field-group">
+          <h3>Guest Information</h3>
+          <label>Full Name</label>
+          <input type="text" id="guestName" />
+          <label>Address</label>
+          <input type="text" id="guestAddress" />
+          <label>Contact Number</label>
+          <input type="text" id="guestContact" />
+        </div>
+        <div class="field-group">
+          <h3>Stay Details</h3>
+          <label>Check-in</label>
+          <div class="date-wrap">
+            <input type="text" id="checkIn" class="datepick" readonly placeholder="Select date" onclick="openCalendar('checkIn')" />
+          </div>
+          <label>Check-out</label>
+          <div class="date-wrap">
+            <input type="text" id="checkOut" class="datepick" readonly placeholder="Select date" onclick="openCalendar('checkOut')" />
+          </div>
+          <label>Package</label>
+          <select id="roomType" onchange="onPackageChange()">
+            <option value="Overnight Package" data-price="10000">Overnight Package — ₱10,000</option>
+            <option value="Day Tour Package" data-price="8000">Day Tour Package — ₱8,000</option>
+          </select>
+          <label>Package Price (editable for discounts)</label>
+          <input type="text" inputmode="decimal" id="packagePrice" value="10,000" oninput="formatCommaInput(this); onPriceEdit()" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <h3>Charges</h3>
+        <table class="items" id="itemsTable">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th class="num" style="width:110px;">Unit Price</th>
+              <th class="num" style="width:120px;">Amount</th>
+              <th class="row-actions"></th>
+            </tr>
+          </thead>
+          <tbody id="itemsBody"></tbody>
+        </table>
+        <div class="add-row"><button onclick="addRow()">+ Add Item</button></div>
+      </div>
+
+      <div class="totals">
+        <div class="line"><span>Subtotal</span><span id="subtotalDisplay">₱0.00</span></div>
+        <div class="line"><span>Discount</span><input type="text" inputmode="decimal" id="discount" value="0" oninput="formatCommaInput(this); calc()" /></div>
+        <div class="line grand"><span>Total Due</span><span id="grandTotal">₱0.00</span></div>
+        <div class="line"><span>Amount Paid</span><input type="text" inputmode="decimal" id="amountPaid" placeholder="0.00" oninput="formatCommaInput(this); calc()" /></div>
+        <div class="line balance"><span>Remaining Balance</span><span id="remainingBalance">₱0.00</span></div>
+      </div>
+
+      <div class="pay-status">
+        <strong style="font-family:'Trebuchet MS',sans-serif;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);">Payment Method:</strong>
+        <label><input type="radio" name="pay" value="Cash" checked> Cash</label>
+        <label><input type="radio" name="pay" value="GCash"> GCash</label>
+        <label><input type="radio" name="pay" value="Bank Transfer"> Bank Transfer</label>
+        <label><input type="radio" name="pay" value="Card"> Card</label>
+      </div>
+
+      <div class="pay-status">
+        <strong style="font-family:'Trebuchet MS',sans-serif;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold);">Receipt For:</strong>
+        <label><input type="radio" name="payType" value="Downpayment" checked> Downpayment</label>
+        <label><input type="radio" name="payType" value="Full Payment"> Full Payment</label>
+      </div>
+
+      <div class="footer-note">
+        <div class="signature">
+          <input type="text" id="cashierName" placeholder="Cashier Name" style="text-align:center;" />
+          <div class="line">Received By</div>
+        </div>
+        <div class="signature">
+          <div style="height:20px;"></div>
+          <div class="line">Guest Signature</div>
+        </div>
+        <div class="stamp">
+          This receipt serves as official proof of payment for Polaris Resort services rendered. Thank you for staying with us.
+        </div>
+      </div>
+
+      <div class="done-row">
+        <button class="primary done-btn" onclick="finalizeInvoice()">✓ Done — Generate Invoice</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="invoice-overlay" id="invoiceOverlay">
+    <div class="invoice-card" id="invoiceCard">
+      <div class="invoice-head">
+        <div class="inv-brand">POLARIS RESORT</div>
+        <div class="inv-sub">Sales Invoice</div>
+      </div>
+      <div class="inv-meta">
+        <div><span>Invoice No.</span><span id="invNo"></span></div>
+        <div><span>Date</span><span id="invDate"></span></div>
+        <div><span>Time</span><span id="invTime"></span></div>
+      </div>
+      <div class="inv-divider"></div>
+      <div class="inv-meta">
+        <div><span>Guest</span><span id="invGuest"></span></div>
+        <div><span>Contact</span><span id="invContact"></span></div>
+        <div><span>Check-in</span><span id="invCheckIn"></span></div>
+        <div><span>Check-out</span><span id="invCheckOut"></span></div>
+      </div>
+      <div class="inv-divider"></div>
+      <table class="inv-items" id="invItems"></table>
+      <div class="inv-divider"></div>
+      <div class="inv-totals" id="invTotals"></div>
+      <div class="inv-divider dashed"></div>
+      <div class="inv-meta">
+        <div><span>Payment Method</span><span id="invPayMethod"></span></div>
+        <div><span>Receipt For</span><span id="invPayType"></span></div>
+        <div><span>Cashier</span><span id="invCashier"></span></div>
+      </div>
+      <div class="inv-footer">Thank you for staying with Polaris Resort!</div>
+    </div>
+    <div class="invoice-actions">
+      <button onclick="backToEdit()">← Back to Edit</button>
+      <button class="primary" onclick="downloadInvoiceJPG()">⬇ Download as JPEG</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+let rowCount = 0;
+
+/* ---------- number / currency helpers (comma formatting) ---------- */
+function parseCommaNumber(val){
+  return parseFloat(String(val || '').replace(/,/g,'')) || 0;
+}
+function formatNumberString(val){
+  const n = parseCommaNumber(val);
+  if(!n && val !== 0 && val !== '0') return '';
+  return n.toLocaleString('en-US', { maximumFractionDigits: 2 });
+}
+function formatCurrency(n){
+  return '₱' + (Number(n) || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+function formatCommaInput(el){
+  let raw = el.value.replace(/,/g,'');
+  if(raw === ''){ el.value = ''; return; }
+  const parts = raw.split('.');
+  let intPart = parts[0].replace(/[^\d]/g,'').replace(/^0+(?=\d)/,'');
+  let formatted = intPart ? Number(intPart).toLocaleString('en-US') : '';
+  if(parts.length > 1){
+    const dec = parts[1].replace(/[^\d]/g,'').slice(0,2);
+    formatted += '.' + dec;
+  }
+  el.value = formatted;
+}
+
+/* ---------- custom calendar picker ---------- */
+let activeCalendarId = null;
+function todayISO(){
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function formatDateDisplay(iso){
+  if(!iso) return '';
+  const [y,m,d] = iso.split('-').map(Number);
+  const dt = new Date(y, m-1, d);
+  return dt.toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+}
+function setDateField(id, iso){
+  const el = document.getElementById(id);
+  el.dataset.iso = iso || '';
+  el.value = iso ? formatDateDisplay(iso) : '';
+}
+function getDateField(id){
+  return document.getElementById(id).dataset.iso || '';
+}
+function closeCalendar(){
+  const pop = document.getElementById('calPop');
+  if(pop) pop.classList.remove('open');
+  activeCalendarId = null;
+}
+function openCalendar(id){
+  activeCalendarId = id;
+  let pop = document.getElementById('calPop');
+  if(!pop){
+    pop = document.createElement('div');
+    pop.id = 'calPop';
+    pop.className = 'cal-pop';
+    document.body.appendChild(pop);
+  }
+  const input = document.getElementById(id);
+  const iso = getDateField(id) || todayISO();
+  const [y,m] = iso.split('-').map(Number);
+  renderCalendar(pop, y, m-1, id);
+  const rect = input.getBoundingClientRect();
+  pop.style.position = 'fixed';
+  pop.style.top = (rect.bottom + 6) + 'px';
+  pop.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 266)) + 'px';
+  pop.classList.add('open');
+}
+function renderCalendar(pop, year, month, id){
+  const selectedIso = getDateField(id);
+  const first = new Date(year, month, 1);
+  const startDow = first.getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+  const monthName = first.toLocaleDateString('en-US', { month:'long', year:'numeric' });
+  const todayIso = todayISO();
+
+  let cells = '';
+  for(let i = startDow - 1; i >= 0; i--){
+    cells += `<div class="day muted">${daysInPrevMonth - i}</div>`;
+  }
+  for(let d = 1; d <= daysInMonth; d++){
+    const iso = year + '-' + String(month+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    const cls = ['day'];
+    if(iso === selectedIso) cls.push('selected');
+    if(iso === todayIso) cls.push('today');
+    cells += `<div class="${cls.join(' ')}" onclick="pickCalendarDate('${id}', ${year}, ${month}, ${d})">${d}</div>`;
+  }
+  const totalCells = startDow + daysInMonth;
+  const trailing = (7 - (totalCells % 7)) % 7;
+  for(let d = 1; d <= trailing; d++){
+    cells += `<div class="day muted">${d}</div>`;
+  }
+
+  pop.innerHTML = `
+    <div class="cal-head">
+      <button type="button" onclick="shiftCalendarMonth('${id}', ${year}, ${month}, -1)">‹</button>
+      <div class="cal-title">${monthName}</div>
+      <button type="button" onclick="shiftCalendarMonth('${id}', ${year}, ${month}, 1)">›</button>
+    </div>
+    <div class="cal-grid">
+      <div class="dow">Su</div><div class="dow">Mo</div><div class="dow">Tu</div><div class="dow">We</div><div class="dow">Th</div><div class="dow">Fr</div><div class="dow">Sa</div>
+      ${cells}
+    </div>
+    <div class="cal-today-row"><button type="button" onclick="pickCalendarDate('${id}', ${new Date().getFullYear()}, ${new Date().getMonth()}, ${new Date().getDate()})">Today</button></div>
+  `;
+}
+function shiftCalendarMonth(id, year, month, delta){
+  let m = month + delta, y = year;
+  if(m < 0){ m = 11; y--; }
+  if(m > 11){ m = 0; y++; }
+  const pop = document.getElementById('calPop');
+  renderCalendar(pop, y, m, id);
+}
+function pickCalendarDate(id, year, month, day){
+  const iso = year + '-' + String(month+1).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+  setDateField(id, iso);
+  closeCalendar();
+  if(id === 'checkIn' || id === 'checkOut') calc();
+}
+document.addEventListener('click', (e) => {
+  const pop = document.getElementById('calPop');
+  if(!pop || !pop.classList.contains('open')) return;
+  if(pop.contains(e.target)) return;
+  if(e.target.classList && e.target.classList.contains('datepick')) return;
+  closeCalendar();
+});
+
+/* ---------- offline support: local cache + pending sync queue ---------- */
+const OFFLINE_CACHE_KEY = 'polaris_offline_cache';
+const PENDING_QUEUE_KEY = 'polaris_pending_queue';
+
+function readLocal(key, fallback){
+  try{ return JSON.parse(localStorage.getItem(key)) || fallback; }catch(e){ return fallback; }
+}
+function writeLocal(key, value){
+  localStorage.setItem(key, JSON.stringify(value));
+}
+
+async function apiGetHistory(){
+  try{
+    const res = await fetch('/api/receipts');
+    if(!res.ok) throw new Error('bad response');
+    const data = await res.json();
+    writeLocal(OFFLINE_CACHE_KEY, data);
+    return mergeWithPending(data);
+  }catch(e){
+    // Offline: fall back to the last synced copy, merged with anything not yet synced
+    return mergeWithPending(readLocal(OFFLINE_CACHE_KEY, []));
+  }
+}
+
+function mergeWithPending(list){
+  const pending = readLocal(PENDING_QUEUE_KEY, []);
+  const byId = {};
+  list.forEach(r => byId[r.id] = r);
+  pending.forEach(p => { if(p.type === 'save') byId[p.record.id] = p.record; });
+  pending.forEach(p => { if(p.type === 'delete') delete byId[p.id]; });
+  return Object.values(byId);
+}
+
+async function apiSaveReceipt(record){
+  try{
+    const res = await fetch('/api/receipts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(record)
+    });
+    if(!res.ok) throw new Error('save failed');
+  }catch(e){
+    // Offline: queue it so it syncs automatically once back online
+    const queue = readLocal(PENDING_QUEUE_KEY, []);
+    queue.push({ type: 'save', record });
+    writeLocal(PENDING_QUEUE_KEY, queue);
+  }
+}
+
+async function apiDeleteReceipt(id){
+  try{
+    const res = await fetch('/api/receipts/' + encodeURIComponent(id), { method: 'DELETE' });
+    if(!res.ok) throw new Error('delete failed');
+  }catch(e){
+    const queue = readLocal(PENDING_QUEUE_KEY, []);
+    queue.push({ type: 'delete', id });
+    writeLocal(PENDING_QUEUE_KEY, queue);
+  }
+}
+
+async function syncPendingQueue(){
+  const queue = readLocal(PENDING_QUEUE_KEY, []);
+  if(queue.length === 0) return;
+  const remaining = [];
+  for(const item of queue){
+    try{
+      if(item.type === 'save'){
+        const res = await fetch('/api/receipts', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(item.record)
+        });
+        if(!res.ok) throw new Error();
+      }else if(item.type === 'delete'){
+        const res = await fetch('/api/receipts/' + encodeURIComponent(item.id), { method: 'DELETE' });
+        if(!res.ok) throw new Error();
+      }
+    }catch(e){
+      remaining.push(item); // still offline or failed, keep for next try
+    }
+  }
+  writeLocal(PENDING_QUEUE_KEY, remaining);
+  if(remaining.length === 0) renderHistory();
+}
+
+window.addEventListener('online', syncPendingQueue);
+window.addEventListener('load', () => {
+  syncPendingQueue();
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  }
+});
+
+function collectReceiptData(){
+  const items = [];
+  document.querySelectorAll('#itemsBody tr').forEach(tr => {
+    items.push({
+      desc: tr.children[0].querySelector('select').value,
+      qty: tr.children[1].querySelector('input').value,
+      price: parseCommaNumber(tr.children[2].querySelector('input').value)
+    });
+  });
+  return {
+    receiptNo: document.getElementById('receiptNo').value,
+    receiptDate: getDateField('receiptDate'),
+    guestName: document.getElementById('guestName').value,
+    guestAddress: document.getElementById('guestAddress').value,
+    guestContact: document.getElementById('guestContact').value,
+    checkIn: getDateField('checkIn'),
+    checkOut: getDateField('checkOut'),
+    roomType: document.getElementById('roomType').value,
+    packagePrice: parseCommaNumber(document.getElementById('packagePrice').value),
+    items: items,
+    discount: parseCommaNumber(document.getElementById('discount').value),
+    payMethod: document.querySelector('input[name=pay]:checked').value,
+    payType: document.querySelector('input[name=payType]:checked').value,
+    amountPaid: parseCommaNumber(document.getElementById('amountPaid').value),
+    cashierName: document.getElementById('cashierName').value,
+    grandTotal: document.getElementById('grandTotal').textContent
+  };
+}
+
+function loadReceiptData(data){
+  document.getElementById('receiptNo').value = data.receiptNo || '';
+  setDateField('receiptDate', data.receiptDate || '');
+  document.getElementById('guestName').value = data.guestName || '';
+  document.getElementById('guestAddress').value = data.guestAddress || '';
+  document.getElementById('guestContact').value = data.guestContact || '';
+  setDateField('checkIn', data.checkIn || '');
+  setDateField('checkOut', data.checkOut || '');
+  document.getElementById('roomType').value = data.roomType || '';
+  document.getElementById('packagePrice').value = formatNumberString(data.packagePrice || 0);
+  document.getElementById('discount').value = formatNumberString(data.discount || 0);
+  document.getElementById('amountPaid').value = data.amountPaid ? formatNumberString(data.amountPaid) : '';
+  document.getElementById('cashierName').value = data.cashierName || '';
+  const radio = document.querySelector(`input[name=pay][value="${data.payMethod}"]`);
+  if(radio) radio.checked = true;
+  const typeRadio = document.querySelector(`input[name=payType][value="${data.payType}"]`);
+  if(typeRadio) typeRadio.checked = true;
+
+  document.getElementById('itemsBody').innerHTML = '';
+  (data.items || []).forEach(it => addRow(it.desc, it.qty, it.price));
+  calc();
+  toggleHistory(false);
+}
+
+async function saveToHistory(silent){
+  const data = collectReceiptData();
+  if(!data.guestName){
+    if(!silent) alert('Please enter a guest name before saving.');
+    return;
+  }
+  const id = data.receiptNo + '_' + (data.receiptDate || Date.now());
+  const record = { id, savedAt: new Date().toISOString(), data };
+  await apiSaveReceipt(record);
+  await renderHistory();
+  if(!silent) alert(navigator.onLine ? 'Receipt saved to history.' : 'Saved offline — will sync once you\'re back online.');
+}
+
+async function deleteFromHistory(id){
+  if(!confirm('Delete this receipt from history?')) return;
+  await apiDeleteReceipt(id);
+  await renderHistory();
+}
+
+async function renderHistory(){
+  const list = document.getElementById('historyList');
+  list.innerHTML = '<div class="history-empty">Loading…</div>';
+  const history = await apiGetHistory();
+  if(history.length === 0){
+    list.innerHTML = '<div class="history-empty">No saved receipts yet.</div>';
+    return;
+  }
+  const groups = {};
+  history.forEach(r => {
+    const d = r.data.receiptDate ? new Date(r.data.receiptDate) : new Date(r.savedAt);
+    const key = d.toLocaleString('default', { month: 'long', year: 'numeric' });
+    groups[key] = groups[key] || [];
+    groups[key].push(r);
+  });
+  let html = '';
+  Object.keys(groups).sort((a,b) => new Date(groups[b][0].savedAt) - new Date(groups[a][0].savedAt)).forEach(month => {
+    html += `<div class="history-month">${month}</div>`;
+    groups[month].forEach(r => {
+      html += `
+        <div class="history-item">
+          <div>
+            <div><strong>#${r.data.receiptNo || '—'}</strong> — ${r.data.guestName || 'Unnamed guest'}</div>
+            <div class="meta">${r.data.receiptDate ? formatDateDisplay(r.data.receiptDate) : ''} · ${r.data.grandTotal || ''}</div>
+          </div>
+          <div class="actions">
+            <button onclick='loadReceiptData(${JSON.stringify(r.data).replace(/'/g,"&#39;")})'>Open</button>
+            <button onclick="deleteFromHistory('${r.id}')">Delete</button>
+          </div>
+        </div>`;
+    });
+  });
+  list.innerHTML = html;
+}
+
+function toggleHistory(forceState){
+  const panel = document.getElementById('historyPanel');
+  const shouldOpen = forceState !== undefined ? forceState : !panel.classList.contains('open');
+  if(shouldOpen){
+    renderHistory();
+    panel.classList.add('open');
+  }else{
+    panel.classList.remove('open');
+  }
+}
+
+function newReceipt(){
+  document.getElementById('receiptNo').value = '';
+  document.getElementById('guestName').value = '';
+  document.getElementById('guestAddress').value = '';
+  document.getElementById('guestContact').value = '';
+  setDateField('checkIn', '');
+  setDateField('checkOut', '');
+  document.getElementById('roomType').selectedIndex = 0;
+  document.getElementById('packagePrice').value = '10,000';
+  document.getElementById('discount').value = '0';
+  document.getElementById('amountPaid').value = '';
+  document.getElementById('cashierName').value = '';
+  document.querySelector('input[name=payType][value="Downpayment"]').checked = true;
+  setDateField('receiptDate', todayISO());
+  document.getElementById('itemsBody').innerHTML = '';
+  addRow("Overnight", 1, 10000);
+  calc();
+}
+
+function finalizeInvoice(){
+  const data = collectReceiptData();
+
+  document.getElementById('invNo').textContent = data.receiptNo || '—';
+  document.getElementById('invDate').textContent = data.receiptDate ? formatDateDisplay(data.receiptDate) : '—';
+  document.getElementById('invTime').textContent = new Date().toLocaleTimeString('en-US', { hour:'numeric', minute:'2-digit' });
+  document.getElementById('invGuest').textContent = data.guestName || '—';
+  document.getElementById('invContact').textContent = data.guestContact || '—';
+  document.getElementById('invCheckIn').textContent = data.checkIn ? formatDateDisplay(data.checkIn) : '—';
+  document.getElementById('invCheckOut').textContent = data.checkOut ? formatDateDisplay(data.checkOut) : '—';
+
+  let itemsHtml = `<tr><th>Package</th><th class="r">Price</th><th class="r">Amount</th></tr>`;
+  data.items.forEach(it => {
+    const price = parseCommaNumber(it.price);
+    const amt = (parseFloat(it.qty)||0) * price;
+    itemsHtml += `<tr><td>${it.desc}</td><td class="r">${formatCurrency(price)}</td><td class="r">${formatCurrency(amt)}</td></tr>`;
+  });
+  document.getElementById('invItems').innerHTML = itemsHtml;
+
+  const subtotal = document.getElementById('subtotalDisplay').textContent;
+  const grand = document.getElementById('grandTotal').textContent;
+  const paid = parseCommaNumber(data.amountPaid);
+  const remaining = document.getElementById('remainingBalance').textContent;
+
+  document.getElementById('invTotals').innerHTML = `
+    <div class="line"><span>Subtotal</span><span>${subtotal}</span></div>
+    <div class="line grand"><span>Total Due</span><span>${grand}</span></div>
+    <div class="line"><span>Amount Paid</span><span>${formatCurrency(paid)}</span></div>
+    <div class="line balance"><span>Remaining Balance</span><span>${remaining}</span></div>
+  `;
+
+  document.getElementById('invPayMethod').textContent = data.payMethod || '—';
+  document.getElementById('invPayType').textContent = data.payType || '—';
+  document.getElementById('invCashier').textContent = data.cashierName || '—';
+
+  document.getElementById('invoiceOverlay').classList.add('open');
+  saveToHistory(true);
+}
+
+function backToEdit(){
+  document.getElementById('invoiceOverlay').classList.remove('open');
+  newReceipt();
+}
+
+function downloadInvoiceJPG(){
+  const card = document.getElementById('invoiceCard');
+  html2canvas(card, { scale: 2, backgroundColor: '#ffffff', useCORS: true }).then(canvas => {
+    canvas.toBlob(blob => {
+      if(!blob){
+        alert('Could not generate image. Please try the Print / Save as PDF option instead.');
+        return;
+      }
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      const name = document.getElementById('guestName').value || 'invoice';
+      const no = document.getElementById('receiptNo').value || '0000';
+      link.download = `Polaris-Invoice-${no}-${name}.jpg`.replace(/\s+/g,'_');
+      link.href = url;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      document.getElementById('invoiceOverlay').classList.remove('open');
+      newReceipt();
+    }, 'image/jpeg', 0.95);
+  }).catch(err => {
+    console.error('Invoice download failed:', err);
+    alert('Download failed: ' + err.message + '\nTry Print / Save as PDF instead.');
+  });
+}
+
+function downloadJPG(){
+  const sheet = document.getElementById('sheet');
+  html2canvas(sheet, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
+    const link = document.createElement('a');
+    const name = document.getElementById('guestName').value || 'receipt';
+    const no = document.getElementById('receiptNo').value || '0000';
+    link.download = `Polaris-Receipt-${no}-${name}.jpg`.replace(/\s+/g,'_');
+    link.href = canvas.toDataURL('image/jpeg', 0.95);
+    link.click();
+  });
+}
+
+function addRow(desc="", qty=1, price=0){
+  rowCount++;
+  const tbody = document.getElementById('itemsBody');
+  const tr = document.createElement('tr');
+  const opts = ["Overnight", "Day Tour"];
+  const current = opts.includes(desc) ? desc : opts[0];
+  const optionsHtml = opts.map(o => `<option value="${o}"${o===current ? ' selected' : ''}>${o}</option>`).join('');
+  const optsHtml = opts.map(o => `<div class="sel-opt${o===current ? ' selected' : ''}" onclick="pickDescOption(this,'${o}')">${o}</div>`).join('');
+  tr.innerHTML = `
+    <td>
+      <div class="sel-wrap">
+        <button type="button" class="sel-btn" onclick="toggleDescSelect(this)"><span class="sel-label">${current}</span><span class="car">⌄</span></button>
+        <select oninput="calc()" onchange="calc()">${optionsHtml}</select>
+        <div class="sel-pop">${optsHtml}</div>
+      </div>
+    </td>
+    <td style="display:none;"><input type="number" value="${qty}" min="0" oninput="calc()"></td>
+    <td class="num"><input type="text" inputmode="decimal" value="${formatNumberString(price)}" oninput="formatCommaInput(this); calc()" style="text-align:right;"></td>
+    <td class="num amount">${formatCurrency(0)}</td>
+    <td class="row-actions"><button onclick="this.closest('tr').remove(); calc();">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  calc();
+}
+
+function toggleDescSelect(btn){
+  const pop = btn.parentElement.querySelector('.sel-pop');
+  const isOpen = pop.classList.contains('open');
+  document.querySelectorAll('.sel-pop.open').forEach(p => p.classList.remove('open'));
+  if(!isOpen) pop.classList.add('open');
+}
+
+function pickDescOption(el, value){
+  const wrap = el.closest('.sel-wrap');
+  wrap.querySelector('.sel-label').textContent = value;
+  wrap.querySelector('select').value = value;
+  wrap.querySelectorAll('.sel-opt').forEach(o => o.classList.toggle('selected', o === el));
+  wrap.querySelector('.sel-pop').classList.remove('open');
+  calc();
+}
+
+document.addEventListener('click', (e) => {
+  if(e.target.closest('.sel-wrap')) return;
+  document.querySelectorAll('.sel-pop.open').forEach(p => p.classList.remove('open'));
+});
+
+function calc(){
+  let subtotal = 0;
+  document.querySelectorAll('#itemsBody tr').forEach(tr => {
+    const qty = parseFloat(tr.children[1].querySelector('input').value) || 0;
+    const price = parseCommaNumber(tr.children[2].querySelector('input').value);
+    const amt = qty * price;
+    tr.querySelector('.amount').textContent = formatCurrency(amt);
+    subtotal += amt;
+  });
+  const discount = parseCommaNumber(document.getElementById('discount').value);
+  const total = Math.max(subtotal - discount, 0);
+  document.getElementById('subtotalDisplay').textContent = formatCurrency(subtotal);
+  document.getElementById('grandTotal').textContent = formatCurrency(total);
+
+  const paid = parseCommaNumber(document.getElementById('amountPaid').value);
+  const remaining = Math.max(total - paid, 0);
+  document.getElementById('remainingBalance').textContent = formatCurrency(remaining);
+}
+
+function onPackageChange(){
+  const select = document.getElementById('roomType');
+  const price = select.options[select.selectedIndex].dataset.price;
+  document.getElementById('packagePrice').value = formatNumberString(price);
+  syncPackageToFirstRow();
+}
+
+function onPriceEdit(){
+  syncPackageToFirstRow();
+}
+
+function syncPackageToFirstRow(){
+  const firstRow = document.querySelector('#itemsBody tr');
+  const price = document.getElementById('packagePrice').value;
+  const roomType = document.getElementById('roomType').value;
+  const chargeLabel = roomType.indexOf('Day Tour') === 0 ? 'Day Tour' : 'Overnight';
+  if(firstRow){
+    const wrap = firstRow.children[0].querySelector('.sel-wrap');
+    wrap.querySelector('select').value = chargeLabel;
+    wrap.querySelector('.sel-label').textContent = chargeLabel;
+    wrap.querySelectorAll('.sel-opt').forEach(o => o.classList.toggle('selected', o.textContent === chargeLabel));
+    firstRow.children[2].querySelector('input').value = price;
+  }
+  calc();
+}
+
+setDateField('receiptDate', todayISO());
+addRow("Overnight", 1, 10000);
+calc();
+</script>
+
+</body>
+</html>
