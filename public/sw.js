@@ -1,5 +1,5 @@
-const CACHE = 'polaris-shell-v1';
-const SHELL_FILES = ['/', '/index.html', '/manifest.json', '/icon.svg'];
+const CACHE = 'polaris-shell-v2';
+const SHELL_FILES = ['/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png', '/apple-touch-icon.png'];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
