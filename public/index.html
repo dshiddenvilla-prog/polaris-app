@@ -273,9 +273,29 @@
 
   @media (max-width:720px){
     .grid-two{grid-template-columns:1fr;}
-    .band{padding:22px;flex-direction:column;gap:14px;}
-    .body-pad{padding:24px;}
-    .footer-note{flex-direction:column;align-items:stretch;}
+    .band{padding:20px;flex-direction:column;gap:14px;align-items:stretch;}
+    .band .doc-label{text-align:left;}
+    .band .doc-label input{width:100%;}
+    .body-pad{padding:18px;}
+    .footer-note{flex-direction:column;align-items:stretch;gap:20px;}
+    .toolbar{gap:10px;}
+    .toolbar h1{font-size:1.15rem;}
+    .btns{width:100%;}
+    .btns button{flex:1;}
+
+    /* iOS Safari zooms the page in when a focused input's font-size is under 16px */
+    input, textarea, select, .sel-btn{font-size:16px;}
+
+    .totals{width:100%;max-width:100%;}
+
+    .table-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px;padding:0 4px;}
+    table.items{min-width:480px;}
+
+    .pay-status{flex-wrap:wrap;gap:10px 16px;}
+
+    .cal-pop{width:min(280px, calc(100vw - 24px));}
+    .cal-grid .day{padding:9px 0;}
+    .row-actions button{padding:8px 12px;}
   }
 
   .history-panel{
@@ -584,6 +604,7 @@
 
       <div class="field-group">
         <h3>Charges</h3>
+        <div class="table-scroll">
         <table class="items" id="itemsTable">
           <thead>
             <tr>
@@ -595,6 +616,7 @@
           </thead>
           <tbody id="itemsBody"></tbody>
         </table>
+        </div>
         <div class="add-row"><button onclick="addRow()">+ Add Item</button></div>
       </div>
 
@@ -747,8 +769,10 @@ function openCalendar(id){
   const rect = input.getBoundingClientRect();
   pop.style.position = 'fixed';
   pop.style.top = (rect.bottom + 6) + 'px';
-  pop.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 266)) + 'px';
+  pop.style.left = '0px';
   pop.classList.add('open');
+  const popWidth = pop.offsetWidth;
+  pop.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - popWidth - 8)) + 'px';
 }
 function renderCalendar(pop, year, month, id){
   const selectedIso = getDateField(id);
@@ -808,7 +832,7 @@ document.addEventListener('click', (e) => {
   if(pop.contains(e.target)) return;
   if(e.target.classList && e.target.classList.contains('datepick')) return;
   closeCalendar();
-});
+}, true);
 
 /* ---------- offline support: local cache + pending sync queue ---------- */
 const OFFLINE_CACHE_KEY = 'polaris_offline_cache';
@@ -1167,7 +1191,7 @@ function pickDescOption(el, value){
 document.addEventListener('click', (e) => {
   if(e.target.closest('.sel-wrap')) return;
   document.querySelectorAll('.sel-pop.open').forEach(p => p.classList.remove('open'));
-});
+}, true);
 
 function calc(){
   let subtotal = 0;
